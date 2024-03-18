@@ -5,31 +5,20 @@ import Chamada from './componentes/Main/Chamada';
 import Rodape from './componentes/Rodape/Rodape';
 import ContainerFiltrosECarros from './componentes/Main/ContainerFiltrosECarros';
 import { useState } from 'react';
+import Header from './componentes/Header';
 
 
 function App() {
 
   const [novoAnuncio, setNovoAnuncio] = useState('')
-  const [pesquisaVeiculo, setPesquisaVeiculo] = useState ('')
-  const [listaDeSugestao, setListaDeSugestao] = useState ([])
+  const [pesquisaVeiculo, setPesquisaVeiculo] = useState('')
+  const [listaDeSugestao, setListaDeSugestao] = useState([])
   const [veiculoSugeridoClicado, setVeiculoSugeridoClicado] = useState('')
   const [aoPesquisarLupa, setAoPesquisarLupa] = useState()
 
   return (
     <div className="App overflow-x-hidden">
-      <Cabecalho
-        aoPesquisarLupa={clique => setAoPesquisarLupa(clique)}
-        veiculoSugeridoClicado={veiculo => setVeiculoSugeridoClicado(veiculo)}
-        novoAnuncio={novoAnuncio => {
-          novoAnuncio.nome = novoAnuncio.nome.toLowerCase()
-          setNovoAnuncio(novoAnuncio)
-        }}
-        aoPesquisarVeiculo={aoPesquisarVeiculo => {
-          const valorLowerCase = aoPesquisarVeiculo.target.value.toLowerCase()
-          setPesquisaVeiculo(valorLowerCase)
-        }}
-        listaDeSugestao={listaDeSugestao}
-      />
+      <Header />
       <Main>
         <Chamada />
         <ContainerFiltrosECarros
@@ -37,7 +26,7 @@ function App() {
           veiculoSugeridoClicado={veiculoSugeridoClicado}
           novoAnuncio={novoAnuncio}
           pesquisaVeiculo={pesquisaVeiculo}
-          listaDeSugestao = {(lista) => setListaDeSugestao(lista)}
+          listaDeSugestao={(lista) => setListaDeSugestao(lista)}
         />
       </Main>
       <Rodape />

@@ -12,6 +12,11 @@ import TelaEntrar from "./TelaEntrar"
 import TelaDeCadastro from "./TelaDeCadastro"
 import TelaEsqueciMinhaSenha from "./TelaEsqueciMinhaSenha"
 import FundoDesfocado from "./FundoDesfocado"
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
 
 
 const Cabecalho = ({ novoAnuncio, aoPesquisarVeiculo, listaDeSugestao, veiculoSugeridoClicado, aoPesquisarLupa }) => {

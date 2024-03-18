@@ -1,6 +1,6 @@
 const Main = ({ children }) => {
     return (
-        <main>
+        <main className="mt-[112px]">
             { children }
         </main>
     )

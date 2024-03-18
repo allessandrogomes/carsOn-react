@@ -193,7 +193,7 @@ const ContainerFiltrosECarros = ({ novoAnuncio, pesquisaVeiculo, listaDeSugestao
         carrosFiltrados.length > 0 ? setCarrosAMostrar(carrosFiltrados) : setCarrosAMostrar([])
     }, [carrosFiltrados]);
     return (
-        <div className="divCentral flex">
+        <div className="divCentral flex min-h-[30vh]">
             {classeAtivo === 'ativo' ? <FundoDesfocadoFiltros /> : ''}
             <BtnAbrirFiltrosMobile 
                 abrirFiltros={abrirFiltrosToggle}
@@ -214,7 +214,3 @@ const ContainerFiltrosECarros = ({ novoAnuncio, pesquisaVeiculo, listaDeSugestao
     )
 }
 export default ContainerFiltrosECarros
-
-
-{/* <FundoDesfocadoFiltros />
-<BtnAbrirFiltrosMobile /> */}
