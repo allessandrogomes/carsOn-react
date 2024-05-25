@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,js}"],
+  content: ["./src/**/*.{html,js,jsx}"],
   theme: {
     extend: {
         backgroundImage: {
@@ -22,7 +22,6 @@ module.exports = {
         },
         fontSize: {
           'font-56px': '56px',
-          'font-10px': '10px'
         },
         width: {
           'width-340px': '340px',
