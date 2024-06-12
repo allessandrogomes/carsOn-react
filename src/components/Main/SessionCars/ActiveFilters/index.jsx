@@ -7,6 +7,11 @@ export default function ActiveFilters() {
             <ChipActiveFilter title="BA"/>
             <ChipActiveFilter title="PRETO"/>
             <ChipActiveFilter title="2018"/>
+            <ChipActiveFilter title="2018"/>
+            <ChipActiveFilter title="2018"/>
+            <ChipActiveFilter title="2018"/>
+            <ChipActiveFilter title="2018"/>
+            <ChipActiveFilter title="2018"/>
         </div>
     )
 }
