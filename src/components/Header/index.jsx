@@ -11,6 +11,7 @@ import AdvertiseButton from './AdvertiseButton';
 import ChatButton from './ChatButton';
 import LoginButton from './LoginButton';
 import SearchBar from './SearchBar';
+import RegisterButton from './RegisterButton';
 
 const drawerWidth = 240;
 
@@ -39,6 +40,7 @@ function Header(props) {
                 <AdvertiseButton />
                 <ChatButton />
                 <LoginButton />
+                <RegisterButton />
             </Box>
         </Box>
     );
@@ -75,6 +77,7 @@ function Header(props) {
                         <AdvertiseButton />
                         <ChatButton />
                         <LoginButton />
+                        <RegisterButton onClick={props.openModalRegister}/>
                     </Box>
                 </Toolbar>
             </AppBar>
