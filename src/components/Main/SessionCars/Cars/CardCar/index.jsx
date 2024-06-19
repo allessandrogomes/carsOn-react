@@ -1,6 +1,10 @@
 import PersonIcon from '@mui/icons-material/Person';
+import { useNavigate } from 'react-router-dom';
 
-export default function CardCar({ image, brand, model, price, year, km, city, state, nameUser }) {
+export default function CardCar({ image, brand, model, price, year, km, city, state, nameUser, _id }) {
+
+    const navigate = useNavigate()
+
     return (
         <div className="carro w-56 m-1 mb-10">
             <div className="mb-2 rounded-borde-radius-32px w-56 h-32 bg-no-repeat bg-cover"
@@ -18,7 +22,11 @@ export default function CardCar({ image, brand, model, price, year, km, city, st
                     <h4 className="ml-4 mb-4 font-archivo text-sm capitalize">{city} - <span className="estadoCarro uppercase">{state}</span></h4>
                     <span className="underline cursor-pointer ml-2 text-xs text-blue-500"><PersonIcon />{nameUser}</span>
                     <button
-                        className="text-color1 font-bold font-archivo ml-4 px-14 py-2 rounded-borde-radius-32px border border-color3">Comprar</button>
+                        className="text-color1 font-bold font-archivo ml-4 px-14 py-2 rounded-borde-radius-32px border border-color3"
+                        onClick={() => navigate(`/advertisement?id=${_id}`)}
+                    >
+                        Ver anúncio
+                    </button>
                 </div>
             </div>
         </div>
