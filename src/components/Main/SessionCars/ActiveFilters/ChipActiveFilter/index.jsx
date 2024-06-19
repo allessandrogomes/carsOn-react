@@ -1,11 +1,8 @@
 import { Chip } from "@mui/material";
 
-export default function ChipActiveFilter({ title }) {
-    const handleDelete = () => {
-        console.info('You clicked the delete icon.');
-    };
+export default function ChipActiveFilter({ title, handleDelete }) {
 
     return (
-        <Chip label={title} onDelete={handleDelete} />
+        <Chip sx={{ textTransform: "capitalize" }} label={title} onDelete={handleDelete} />
     )
 }
