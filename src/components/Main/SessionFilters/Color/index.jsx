@@ -1,7 +1,9 @@
+import { useSearchParams } from "react-router-dom";
 import DividingLine from "../shared/DividingLine"
 import TitleFilter from "../shared/TitleFilter"
 import ColorButton from "./ColorButton"
 import ColorLensOutlinedIcon from '@mui/icons-material/ColorLensOutlined';
+import { useEffect, useState } from "react";
 
 const colors = [
     {
@@ -35,12 +37,63 @@ const colors = [
 ]
 
 export default function Color() {
+
+    const [params, setParams] = useSearchParams()
+    const [selected, setSelected] = useState([])
+
+    function resolveColorFilter(color) {
+        if (params.get("color")) {
+            if (params.get("color").split(',').includes(color)) {
+                setParams(prevParams => {
+                    const newParams = new URLSearchParams(prevParams)
+                    const currentColors = newParams.get('color')
+                    if (currentColors) {
+                        const colorsArray = currentColors.split(',').map(term => term.trim()).filter(term => term !== color);
+
+                        if (colorsArray.length > 0) {
+                            newParams.set('color', colorsArray.join(','))
+                        } else {
+                            newParams.delete('color')
+                        }
+                        return newParams
+                    }
+                })
+            } else {
+                setParams(prevParams => {
+                    const newParams = new URLSearchParams(prevParams)
+                    const currentColors = newParams.get('color')
+                    if (currentColors) {
+                        newParams.set('color', `${currentColors},${color}`)
+                    } else {
+                        newParams.set('color', color)
+                    }
+                    return newParams
+                })
+            }
+        } else {
+            setParams(prevParams => {
+                const newParams = new URLSearchParams(prevParams)
+                newParams.set("color", color)
+                return newParams
+            })
+        }
+    }
+
+    useEffect(() => {
+        if (params.get("color")) {
+            const arrayParamsColors = params.get("color").split(',')
+            setSelected(arrayParamsColors)
+        } else {
+            setSelected([])
+        }
+    }, [params])
+
     return (
         <div>
             <TitleFilter title="Cor" icon={<ColorLensOutlinedIcon />} />
             <div className="text-[10px] flex flex-wrap w-[300px] gap-2">
                 {colors.map(item => (
-                    <ColorButton key={item.colorName} {...item}/>
+                    <ColorButton onClick={() => resolveColorFilter(item.colorName.toLowerCase())} selected={selected.includes(item.colorName)} key={item.colorName} {...item} />
                 ))}
             </div>
             <DividingLine />
