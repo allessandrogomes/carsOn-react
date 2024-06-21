@@ -77,7 +77,7 @@ function Header(props) {
                         <AdvertiseButton />
                         <ChatButton />
                         <LoginButton />
-                        <RegisterButton onClick={props.openModalRegister}/>
+                        <RegisterButton />
                     </Box>
                 </Toolbar>
             </AppBar>

@@ -1,10 +1,9 @@
 import { Button, Typography } from "@mui/material"
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 
-const RegisterButton = ({ onClick }) => {
+const RegisterButton = () => {
     return (
         <Button
-            onClick={onClick}
             variant="contained"
             sx={{
                 backgroundColor: '#FFF',
