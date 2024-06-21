@@ -66,6 +66,7 @@ export default function ActiveFilters() {
                 } else {
                     newParams.delete(filterType)
                 }
+                newParams.set("page", 1)
                 return newParams
             }
         })

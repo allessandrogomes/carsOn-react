@@ -54,6 +54,7 @@ export default function State() {
                     } else {
                         newParams.delete('state')
                     }
+                    newParams.set("page", 1)
                     return newParams
                 }
             })
@@ -67,6 +68,7 @@ export default function State() {
                 } else {
                     newParams.set('state', stateName)
                 }
+                newParams.set("page", 1)
                 return newParams
             })
         }

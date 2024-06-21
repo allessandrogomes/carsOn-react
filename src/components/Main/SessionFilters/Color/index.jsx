@@ -55,6 +55,7 @@ export default function Color() {
                         } else {
                             newParams.delete('color')
                         }
+                        newParams.set("page", 1)
                         return newParams
                     }
                 })
@@ -67,6 +68,7 @@ export default function Color() {
                     } else {
                         newParams.set('color', color)
                     }
+                    newParams.set("page", 1)
                     return newParams
                 })
             }
@@ -74,6 +76,7 @@ export default function Color() {
             setParams(prevParams => {
                 const newParams = new URLSearchParams(prevParams)
                 newParams.set("color", color)
+                newParams.set("page", 1)
                 return newParams
             })
         }
