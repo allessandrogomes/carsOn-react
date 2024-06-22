@@ -68,6 +68,11 @@ export default function Year() {
     useEffect(() => {
         if (params.get("year")) {
             setActiveFilter(true)
+            const yearParams = params.get("year").split("-")
+            setIntervalYear({
+                minYear: yearParams[0],
+                maxYear: yearParams[1]
+            })
         } else {
             setActiveFilter(false)
             setIntervalYear(prevInterval => {

@@ -1,5 +1,6 @@
 import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
+import { formatToBRL } from '../../../../../utils/formatToBRL.js'
 
 export default function CardCar({ image, brand, model, price, year, km, city, state, nameUser, _id }) {
 
@@ -14,7 +15,7 @@ export default function CardCar({ image, brand, model, price, year, km, city, st
                 <div className="w-px h-50 bg-color3"></div>
                 <div>
                     <h3 className="nomeCarro ml-4 uppercase mb-1 text-base font-archivo font-bold text-color2">{brand} {model} {year}</h3>
-                    <h4 className="ml-4 mb-1 text-lg font-bold font-big-shoulders-display">{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(price)}</h4>
+                    <h4 className="ml-4 mb-1 text-lg font-bold font-big-shoulders-display">{formatToBRL(price)}</h4>
                     <div className="flex mb-3">
                         <h4 className="ml-4 mr-6 font-archivo text-sm">{year}&#47;{year}</h4>
                         <h4 className="font-archivo text-sm">{km}km</h4>
