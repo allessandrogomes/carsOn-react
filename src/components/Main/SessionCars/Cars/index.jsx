@@ -27,6 +27,7 @@ export default function Cars() {
                 color: searchParams.get('color'),
                 year: searchParams.get('year'),
                 state: searchParams.get('state'),
+                city: searchParams.get('city'),
                 brand: searchParams.get('brand'),
                 price: searchParams.get('price'),
             }

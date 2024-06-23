@@ -1,8 +1,8 @@
 import { Chip } from "@mui/material";
 
-export default function ChipActiveFilter({ title, handleDelete }) {
+export default function ChipActiveFilter({ filter, filterType, handleDelete }) {
 
     return (
-        <Chip sx={{ textTransform: "capitalize" }} label={title} onDelete={handleDelete} />
+        <Chip sx={{ textTransform: "capitalize" }} label={`${filterType}: ${filter}`} onDelete={handleDelete} />
     )
 }

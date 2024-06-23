@@ -9,6 +9,9 @@ export default function ActiveFilters() {
         state: {
             values: []
         },
+        city: {
+            values: []
+        },
         color: {
             values: []
         },
@@ -26,6 +29,10 @@ export default function ActiveFilters() {
     useEffect(() => {
         const state = {
             values: params.get("state") ? params.get("state").split(',') : []
+        }
+
+        const city = {
+            values: params.get("city") ? params.get("city").split(',') : []
         }
 
         const color = {
@@ -47,6 +54,7 @@ export default function ActiveFilters() {
         setFilters(prevFilters => ({
             ...prevFilters,
             state,
+            city,
             color,
             brand,
             year,
@@ -77,7 +85,7 @@ export default function ActiveFilters() {
             <h3>Filtros:</h3>
             {Object.keys(filters).map(filterType => (
                 filters[filterType].values.map(filterValue => (
-                    <ChipActiveFilter title={filterValue} key={filterValue} handleDelete={() => handleDeleteFilter(filterValue, filterType)} />
+                    <ChipActiveFilter filterType={filterType} filter={filterValue} key={filterValue} handleDelete={() => handleDeleteFilter(filterValue, filterType)} />
                 ))
             ))}
         </div>
