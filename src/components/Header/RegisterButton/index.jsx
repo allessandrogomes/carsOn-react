@@ -1,9 +1,12 @@
 import { Button, Typography } from "@mui/material"
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import { useNavigate } from "react-router-dom";
 
 const RegisterButton = () => {
+
     return (
         <Button
+            onClick={() => window.location.href="/register"}
             variant="contained"
             sx={{
                 backgroundColor: '#FFF',
