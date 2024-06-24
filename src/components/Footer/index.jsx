@@ -14,9 +14,9 @@ const socialMedias = [
     }
 ]
 
-export default function Footer() {
+export default function Footer({ bgColor = "bg-teal-400" }) {
     return (
-        <div className="text-center h-28 bg-teal-400 flex items-center justify-center font-archivo flex-col">
+        <div className={`text-center w-full h-28 ${bgColor} flex items-center justify-center font-archivo flex-col`}>
             <Credits />
             <SocialMedias socialMedias={socialMedias}/>
         </div>
