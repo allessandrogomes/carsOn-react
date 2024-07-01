@@ -1,4 +1,4 @@
-import { Box, Button, Paper, TextField } from "@mui/material";
+import { Box, Button, Input, Paper, TextField } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import * as yup from 'yup';
@@ -46,14 +46,26 @@ const validationSchema = yup.object({
         })
         .required('O número de telefone é obrigatório'),
     cep: yup.number().typeError('O CEP deve conter apenas números').required('O CEP é obrigatório').test('len', 'O CEP deve ter exatamente 8 dígitos', val => val && val.toString().length === 8),
+    state: yup.string().required('Insira um CEP válido'),
+    city: yup.string().required('Insira um CEP válido'),
     street: yup
         .string('Digite o nome da sua rua')
-        .matches(/^[\w\s\d.,\-\\/()&'`]+$/i, 'Digite uma rua válida')
+        .matches(/^[\w\s\d.,\-\\/()&'`áéíóúâêîôû]+$/i, 'Digite uma rua válida')
         .required('O nome da rua é obrigatório'),
     houseNumber: yup
-        .number('Digite o número da casa')
-        .typeError('Digite apenas números')
-        .required('O número da casa é obrigatório')
+        .string()
+        .matches(/^\d+\s*[a-zA-Z]*$/, 'Digite um número de casa válido')
+        .required('O número da casa é obrigatório'),
+    email: yup.string().email('Insira um email válido').required('O email é obrigatório'),
+    password: yup
+        .string()
+        .matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=!*.?]).{8,}$/,
+            'A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma letra minúscula, um número e um caractere especial.').required('A senha é obrigatória'),
+    confirmPassword: yup.string()
+        .oneOf([yup.ref('password'), null], 'As senhas devem ser iguais')
+        .required('A confirmação de senha é obrigatória'),
+    acceptTerms: yup.boolean()
+        .oneOf([true], 'Você deve aceitar os termos e condições')
 })
 
 export default function FormPersonalData() {
@@ -68,148 +80,237 @@ export default function FormPersonalData() {
             state: '',
             city: '',
             street: '',
-            houseNumber: ''
+            houseNumber: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            acceptTerms: false
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2))
+            console.log(values)
         }
     })
 
+    function resolveFieldCEP(event) {
+        formik.handleBlur(event)
+
+        async function getDataCEP() {
+            try {
+                const response = await fetch(`https://viacep.com.br/ws/${formik.values.cep}/json/`)
+                const data = await response.json();
+
+                if (data.erro) {
+                    formik.setFieldError("cep", "CEP não encontrado")
+                    return
+                }
+
+                formik.setFieldValue('state', data.uf)
+                formik.setFieldValue('city', data.localidade)
+                formik.setFieldValue('street', data.logradouro)
+            } catch (err) {
+                console.log("Não foi possível buscar os dados do CEP", err)
+            }
+        }
+        getDataCEP()
+    }
+
     return (
-        <Paper elevation={24} className="flex justify-self-center flex-col border-2 border-color1 p-10 w-[80%] max-w-[850px] mx-6 my-[80px]">
-            <div className="flex flex-col justify-center gap-4 w-[80%] max-w-[750px] mb-6">
+        <Paper elevation={24} className="flex flex-col border-2 border-color1 p-10 w-[80%] max-w-[850px] mx-6 my-[80px]">
+            <div className="flex flex-col gap-4 w-[80%] max-w-[750px] mb-6">
                 <button className="mt-2 self-start" onClick={() => window.location.href = "/"}><ArrowBackIcon /> Voltar</button>
                 <h1 className="font-bold text-4xl">Crie sua conta na <span className="text-color2">CarsOn</span></h1>
             </div>
-            <h1 className="font-bold mb-6">Dados pessoais</h1>
-            <form onSubmit={formik.handleSubmit} className="flex flex-wrap gap-4 justify-center items-center mb-6">
-                <TextField
-                    className="w-[230px] h-[80px]"
-                    id="name"
-                    name="name"
-                    label="Nome"
-                    variant="outlined"
-                    value={formik.values.name}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={formik.touched.name && Boolean(formik.errors.name)}
-                    helperText={formik.touched.name && formik.errors.name}
-                />
-                <TextField
-                    className="w-[230px] h-[80px]"
-                    id="surname"
-                    name="surname"
-                    label="Sobrenome"
-                    variant="outlined"
-                    value={formik.values.surname}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={formik.touched.surname && Boolean(formik.errors.surname)}
-                    helperText={formik.touched.surname && formik.errors.surname}
-                />
-                <InputMask
-                    mask="99/99/9999"
-                    value={formik.values.dateOfBirth}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                >
-                    {() => (
-                        <TextField
-                            className="w-[230px] h-[80px]"
-                            id="dateOfBirth"
-                            name="dateOfBirth"
-                            label="Data de nascimento"
-                            variant="outlined"
-                            error={formik.touched.dateOfBirth && Boolean(formik.errors.dateOfBirth)}
-                            helperText={formik.touched.dateOfBirth && formik.errors.dateOfBirth}
+            <form onSubmit={formik.handleSubmit} className="flex flex-col gap-6 justify-center items-center mb-6">
+                <h1 className="font-bold self-start">Dados pessoais</h1>
+                <div className="flex flex-wrap gap-4 justify-center">
+                    <TextField
+                        className="w-[230px] h-[80px]"
+                        id="name"
+                        name="name"
+                        label="Nome"
+                        variant="outlined"
+                        value={formik.values.name}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.name && Boolean(formik.errors.name)}
+                        helperText={formik.touched.name && formik.errors.name}
+                    />
+                    <TextField
+                        className="w-[230px] h-[80px]"
+                        id="surname"
+                        name="surname"
+                        label="Sobrenome"
+                        variant="outlined"
+                        value={formik.values.surname}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.surname && Boolean(formik.errors.surname)}
+                        helperText={formik.touched.surname && formik.errors.surname}
+                    />
+                    <InputMask
+                        mask="99/99/9999"
+                        value={formik.values.dateOfBirth}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                    >
+                        {() => (
+                            <TextField
+                                className="w-[230px] h-[80px]"
+                                id="dateOfBirth"
+                                name="dateOfBirth"
+                                label="Data de nascimento"
+                                variant="outlined"
+                                error={formik.touched.dateOfBirth && Boolean(formik.errors.dateOfBirth)}
+                                helperText={formik.touched.dateOfBirth && formik.errors.dateOfBirth}
+                            />
+                        )}
+                    </InputMask>
+                    <InputMask
+                        mask="(99) 99999-9999"
+                        value={formik.values.phoneNumber}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                    >
+                        {() => (
+                            <TextField
+                                className="w-[230px] h-[80px]"
+                                id="phoneNumber"
+                                name="phoneNumber"
+                                label="Telefone"
+                                placeholder="(XX) XXXXX-XXXX"
+                                variant="outlined"
+                                error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}
+                                helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
+                            />
+                        )}
+                    </InputMask>
+                    <TextField
+                        inputProps={{ maxLength: 8 }}
+                        className="w-[230px] h-[80px]"
+                        id="cep"
+                        name="cep"
+                        label="CEP (Apenas números)"
+                        placeholder="ex: 44555670"
+                        variant="outlined"
+                        value={formik.values.cep}
+                        onChange={formik.handleChange}
+                        onBlur={resolveFieldCEP}
+                        error={formik.touched.cep && Boolean(formik.errors.cep)}
+                        helperText={formik.touched.cep && formik.errors.cep}
+                    />
+                    <TextField
+                        className="w-[230px] h-[80px]"
+                        id="state"
+                        name="state"
+                        label="Estado"
+                        variant="outlined"
+                        disabled
+                        value={formik.values.state}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.state && Boolean(formik.errors.state)}
+                        helperText={formik.touched.state && formik.errors.state}
+                    />
+                    <TextField
+                        className="w-[230px] h-[80px]"
+                        id="city"
+                        name="city"
+                        label="Cidade"
+                        variant="outlined"
+                        disabled
+                        value={formik.values.city}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.city && Boolean(formik.errors.city)}
+                        helperText={formik.touched.city && formik.errors.city}
+                    />
+                    <TextField
+                        className="w-[230px] h-[80px]"
+                        id="street"
+                        name="street"
+                        label="Rua"
+                        variant="outlined"
+                        value={formik.values.street}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.street && Boolean(formik.errors.street)}
+                        helperText={formik.touched.street && formik.errors.street}
+                    />
+                    <TextField
+                        inputProps={{ maxLength: 10 }}
+                        className="w-[230px] h-[80px]"
+                        id="houseNumber"
+                        name="houseNumber"
+                        label="Número"
+                        variant="outlined"
+                        value={formik.values.houseNumber}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.houseNumber && Boolean(formik.errors.houseNumber)}
+                        helperText={formik.touched.houseNumber && formik.errors.houseNumber}
+                    />
+                </div>
+                <h1 className="font-bold mb-6 self-start">Dados de acesso</h1>
+                <div className="flex flex-wrap gap-4 justify-center mb-20">
+                    <TextField
+                        className="w-[230px] h-[80px]"
+                        id="email"
+                        name="email"
+                        label="Email"
+                        variant="outlined"
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.email && Boolean(formik.errors.email)}
+                        helperText={formik.touched.email && formik.errors.email}
+                        type="email"
+                    />
+                    <TextField
+                        className="w-[230px] h-[80px]"
+                        id="password"
+                        name="password"
+                        label="Senha"
+                        variant="outlined"
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.password && Boolean(formik.errors.password)}
+                        helperText={formik.touched.password && formik.errors.password}
+                        type="password"
+                    />
+                    <TextField
+                        className="w-[230px] h-[80px]"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        label="Confirmar senha"
+                        variant="outlined"
+                        value={formik.values.confirmPassword}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
+                        helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+                        type="password"
+                    />
+                </div>
+                <div className="flex flex-col gap-2 items-center">
+                    <div className="flex gap-2">
+                        <input
+                            id="check-terms"
+                            name="acceptTerms"
+                            type="checkbox"
+                            checked={formik.values.acceptTerms}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.acceptTerms && Boolean(formik.errors.acceptTerms)}
+                            helperText={formik.touched.acceptTerms && formik.errors.acceptTerms}
                         />
-                    )}
-                </InputMask>
-                <InputMask
-                    mask="(99) 99999-9999"
-                    value={formik.values.phoneNumber}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                >
-                    {() => (
-                        <TextField
-                            className="w-[230px] h-[80px]"
-                            id="phoneNumber"
-                            name="phoneNumber"
-                            label="Telefone"
-                            placeholder="(XX) XXXXX-XXXX"
-                            variant="outlined"
-                            error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}
-                            helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
-                        />
-                    )}
-                </InputMask>
-                <TextField
-                    inputProps={{ maxLength: 8 }}
-                    className="w-[230px] h-[80px]"
-                    id="cep"
-                    name="cep"
-                    label="CEP (Apenas números)"
-                    placeholder="ex: 44555670"
-                    variant="outlined"
-                    value={formik.values.cep}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={formik.touched.cep && Boolean(formik.errors.cep)}
-                    helperText={formik.touched.cep && formik.errors.cep}
-                />
-                <TextField
-                    className="w-[230px] h-[80px]"
-                    id="state"
-                    name="state"
-                    label="Estado"
-                    variant="outlined"
-                    disabled
-                    value={formik.values.state}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={formik.touched.state && Boolean(formik.errors.state)}
-                    helperText={formik.touched.state && formik.errors.state}
-                />
-                <TextField
-                    className="w-[230px] h-[80px]"
-                    id="city"
-                    name="city"
-                    label="Cidade"
-                    variant="outlined"
-                    disabled
-                    value={formik.values.city}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={formik.touched.city && Boolean(formik.errors.city)}
-                    helperText={formik.touched.city && formik.errors.city}
-                />
-                <TextField
-                    className="w-[230px] h-[80px]"
-                    id="street"
-                    name="street"
-                    label="Rua"
-                    variant="outlined"
-                    value={formik.values.street}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={formik.touched.street && Boolean(formik.errors.street)}
-                    helperText={formik.touched.street && formik.errors.street}
-                />
-                <TextField
-                    inputProps={{ maxLength: 6 }}
-                    className="w-[230px] h-[80px]"
-                    id="houseNumber"
-                    name="houseNumber"
-                    label="Número"
-                    variant="outlined"
-                    value={formik.values.houseNumber}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={formik.touched.houseNumber && Boolean(formik.errors.houseNumber)}
-                    helperText={formik.touched.houseNumber && formik.errors.houseNumber}
-                />
+                        <label htmlFor="check-terms">Aceito os Termos e Condições de uso</label>
+                    </div>
+                    {formik.touched.acceptTerms && formik.errors.acceptTerms ? (
+                        <div className="text-red-600">{formik.errors.acceptTerms}</div>
+                    ) : null}
+                </div>
                 <Button
                     type="submit"
                     sx={{ backgroundColor: "#38BCAC", '&:hover': { backgroundColor: '#2d9488' } }}
