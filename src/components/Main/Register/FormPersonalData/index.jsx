@@ -4,6 +4,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import * as yup from 'yup';
 import { useFormik } from "formik";
 import InputMask from 'react-input-mask';
+import { useState } from "react";
 
 const validationSchema = yup.object({
     name: yup
@@ -65,10 +66,33 @@ const validationSchema = yup.object({
         .oneOf([yup.ref('password'), null], 'As senhas devem ser iguais')
         .required('A confirmação de senha é obrigatória'),
     acceptTerms: yup.boolean()
-        .oneOf([true], 'Você deve aceitar os termos e condições')
+        .oneOf([true], 'Você deve aceitar os Termos e Condições de uso')
 })
 
 export default function FormPersonalData() {
+
+    const [emailExistsMsg, setEmailExistsMsg] = useState('')
+
+    async function checkEmailAlreadyExists(email) {
+        const response = await fetch("https://localhost:3001/user/check-email", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email })
+        })
+        const data = await response.json()
+        if (data.exists) {
+            setEmailExistsMsg('Email já cadastrado')
+        } else {
+            setEmailExistsMsg('')
+        }
+    }
+
+    function resolveEmail(event) {
+        formik.handleBlur(event)
+        checkEmailAlreadyExists(formik.values.email)
+    }
 
     const formik = useFormik({
         initialValues: {
@@ -88,7 +112,24 @@ export default function FormPersonalData() {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            console.log(values)
+            if (!emailExistsMsg) {
+                const { confirmPassword, acceptTerms, ...userValues } = values
+
+                async function registerUser() {
+                    try {
+                        await fetch("https://localhost:3001/user/register", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(userValues)
+                        })
+                    } catch (err) {
+                        console.log(err)
+                    }
+                }
+                registerUser()
+            }
         }
     })
 
@@ -261,9 +302,9 @@ export default function FormPersonalData() {
                         variant="outlined"
                         value={formik.values.email}
                         onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        error={formik.touched.email && Boolean(formik.errors.email)}
-                        helperText={formik.touched.email && formik.errors.email}
+                        onBlur={resolveEmail}
+                        error={formik.touched.email && Boolean(formik.errors.email) || Boolean(emailExistsMsg)}
+                        helperText={(formik.touched.email && formik.errors.email) || emailExistsMsg}
                         type="email"
                     />
                     <TextField
