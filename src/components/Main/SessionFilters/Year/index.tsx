@@ -91,7 +91,7 @@ export default function Year() {
       <div className="flex">
         {activeFilter ? (
           <>
-            <span className="text-sm underline self-center mr-1">
+            <span className="mr-1 self-center text-sm underline">
               {intervalYear.minYear} - {intervalYear.maxYear}
             </span>
             <button onClick={removeYearFilter}>
@@ -134,7 +134,7 @@ export default function Year() {
               <ButtonOk />
             </div>
             {msgError && (
-              <span className="text-red-600 text-xs font-bold">{msgError}</span>
+              <span className="text-xs font-bold text-red-600">{msgError}</span>
             )}
           </form>
         )}

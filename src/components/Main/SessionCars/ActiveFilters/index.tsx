@@ -86,7 +86,7 @@ export default function ActiveFilters() {
   }
 
   return (
-    <div className="w-[95%] min-h-20 justify-start flex flex-wrap items-center text-color3 p-5 font-archivo rounded-full border bg-color4 gap-2">
+    <div className="flex min-h-20 w-[95%] flex-wrap items-center justify-start gap-2 rounded-full border bg-color4 p-5 font-archivo text-color3">
       <h3>Filtros:</h3>
       {Object.keys(filters).map((filterType) =>
         filters[filterType as keyof IFilters].values.map(

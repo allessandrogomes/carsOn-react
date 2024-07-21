@@ -101,7 +101,7 @@ export default function Color() {
   return (
     <div>
       <TitleFilter title="Cor" icon={<ColorLensOutlinedIcon />} />
-      <div className="text-[10px] flex flex-wrap w-[300px] gap-2">
+      <div className="flex w-[300px] flex-wrap gap-2 text-[10px]">
         {colors.map((item) => (
           <ColorButton
             onClick={() => resolveColorFilter(item.colorName.toLowerCase())}

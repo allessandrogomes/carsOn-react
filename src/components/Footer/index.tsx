@@ -24,7 +24,7 @@ const socialMedias: ISocialMedias[] = [
 export default function Footer({ bgColor = 'bg-teal-400' }) {
   return (
     <div
-      className={`text-center w-full h-28 ${bgColor} flex items-center justify-center font-archivo flex-col`}
+      className={`h-28 w-full text-center ${bgColor} flex flex-col items-center justify-center font-archivo`}
     >
       <Credits />
       <SocialMedias socialMedias={socialMedias} />

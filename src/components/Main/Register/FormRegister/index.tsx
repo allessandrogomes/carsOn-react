@@ -197,27 +197,27 @@ export default function FormPersonalData() {
   return (
     <Paper
       elevation={24}
-      className="flex flex-col border-2 border-color1 p-10 w-[80%] max-w-[850px] mx-6 my-[80px]"
+      className="mx-6 my-[80px] flex w-[80%] max-w-[850px] flex-col border-2 border-color1 p-10"
     >
-      <div className="flex flex-col gap-4 w-[80%] max-w-[750px] mb-6">
+      <div className="mb-6 flex w-[80%] max-w-[750px] flex-col gap-4">
         <button
           className="mt-2 self-start"
           onClick={() => (window.location.href = '/')}
         >
           <ArrowBackIcon /> Voltar
         </button>
-        <h1 className="font-bold text-4xl">
+        <h1 className="text-4xl font-bold">
           Crie sua conta na <span className="text-color2">CarsOn</span>
         </h1>
       </div>
       <form
         onSubmit={formik.handleSubmit}
-        className="flex flex-col gap-6 justify-center items-center mb-6"
+        className="mb-6 flex flex-col items-center justify-center gap-6"
       >
-        <h1 className="font-bold self-start">Dados pessoais</h1>
-        <div className="flex flex-wrap gap-4 justify-center">
+        <h1 className="self-start font-bold">Dados pessoais</h1>
+        <div className="flex flex-wrap justify-center gap-4">
           <TextField
-            className="w-[230px] h-[80px]"
+            className="h-[80px] w-[230px]"
             id="name"
             name="name"
             label="Nome"
@@ -229,7 +229,7 @@ export default function FormPersonalData() {
             helperText={formik.touched.name && formik.errors.name}
           />
           <TextField
-            className="w-[230px] h-[80px]"
+            className="h-[80px] w-[230px]"
             id="surname"
             name="surname"
             label="Sobrenome"
@@ -247,7 +247,7 @@ export default function FormPersonalData() {
             onBlur={formik.handleBlur}
           >
             <TextField
-              className="w-[230px] h-[80px]"
+              className="h-[80px] w-[230px]"
               id="dateOfBirth"
               name="dateOfBirth"
               label="Data de nascimento"
@@ -267,7 +267,7 @@ export default function FormPersonalData() {
             onBlur={formik.handleBlur}
           >
             <TextField
-              className="w-[230px] h-[80px]"
+              className="h-[80px] w-[230px]"
               id="phoneNumber"
               name="phoneNumber"
               label="Telefone"
@@ -283,7 +283,7 @@ export default function FormPersonalData() {
           </InputMask>
           <TextField
             inputProps={{ maxLength: 8 }}
-            className="w-[230px] h-[80px]"
+            className="h-[80px] w-[230px]"
             id="cep"
             name="cep"
             label="CEP (Apenas números)"
@@ -296,7 +296,7 @@ export default function FormPersonalData() {
             helperText={formik.touched.cep && formik.errors.cep}
           />
           <TextField
-            className="w-[230px] h-[80px]"
+            className="h-[80px] w-[230px]"
             id="state"
             name="state"
             label="Estado"
@@ -309,7 +309,7 @@ export default function FormPersonalData() {
             helperText={formik.touched.state && formik.errors.state}
           />
           <TextField
-            className="w-[230px] h-[80px]"
+            className="h-[80px] w-[230px]"
             id="city"
             name="city"
             label="Cidade"
@@ -322,7 +322,7 @@ export default function FormPersonalData() {
             helperText={formik.touched.city && formik.errors.city}
           />
           <TextField
-            className="w-[230px] h-[80px]"
+            className="h-[80px] w-[230px]"
             id="street"
             name="street"
             label="Rua"
@@ -335,7 +335,7 @@ export default function FormPersonalData() {
           />
           <TextField
             inputProps={{ maxLength: 10 }}
-            className="w-[230px] h-[80px]"
+            className="h-[80px] w-[230px]"
             id="houseNumber"
             name="houseNumber"
             label="Número"
@@ -349,10 +349,10 @@ export default function FormPersonalData() {
             helperText={formik.touched.houseNumber && formik.errors.houseNumber}
           />
         </div>
-        <h1 className="font-bold mb-6 self-start">Dados de acesso</h1>
-        <div className="flex flex-wrap gap-4 justify-center mb-20">
+        <h1 className="mb-6 self-start font-bold">Dados de acesso</h1>
+        <div className="mb-20 flex flex-wrap justify-center gap-4">
           <TextField
-            className="w-[230px] h-[80px]"
+            className="h-[80px] w-[230px]"
             id="email"
             name="email"
             label="Email"
@@ -370,7 +370,7 @@ export default function FormPersonalData() {
             type="email"
           />
           <TextField
-            className="w-[230px] h-[80px]"
+            className="h-[80px] w-[230px]"
             id="password"
             name="password"
             label="Senha"
@@ -383,7 +383,7 @@ export default function FormPersonalData() {
             type="password"
           />
           <TextField
-            className="w-[230px] h-[80px]"
+            className="h-[80px] w-[230px]"
             id="confirmPassword"
             name="confirmPassword"
             label="Confirmar senha"
@@ -401,7 +401,7 @@ export default function FormPersonalData() {
             type="password"
           />
         </div>
-        <div className="flex flex-col gap-2 items-center">
+        <div className="flex flex-col items-center gap-2">
           <div className="flex gap-2">
             <input
               id="check-terms"

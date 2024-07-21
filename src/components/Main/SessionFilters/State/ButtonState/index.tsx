@@ -8,9 +8,9 @@ const StateButton = ({ uf, selected, onClick }: IStateButton) => {
   return (
     <div
       onClick={onClick}
-      className={`${selected ? 'border-2' : ''} btnEstado border-color2 flex justify-center items-center text-center mr-1 mb-1 w-9 h-9 cursor-pointer`}
+      className={`${selected ? 'border-2' : ''} btnEstado mb-1 mr-1 flex h-9 w-9 cursor-pointer items-center justify-center border-color2 text-center`}
     >
-      <h5 className="btnEstadoValor w-full text-zinc-400 uppercase font-archivo">
+      <h5 className="btnEstadoValor w-full font-archivo uppercase text-zinc-400">
         {uf}
       </h5>
     </div>

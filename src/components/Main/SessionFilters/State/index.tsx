@@ -58,7 +58,6 @@ export default function State() {
       setParams((prevParams) => {
         const newParams = new URLSearchParams(prevParams)
         newParams.delete('city')
-        newParams.set('page', '1')
         return newParams
       })
       setState('')
@@ -70,7 +69,6 @@ export default function State() {
       setParams((prevParams) => {
         const newParams = new URLSearchParams(prevParams)
         newParams.delete('city')
-        newParams.set('page', '1')
         return newParams
       })
     } else if (params.get('city')) {
@@ -98,8 +96,8 @@ export default function State() {
     if (state) {
       let uf = ''
       states.forEach((item) => {
-        if (item.nome === state) {
-          uf = item.sigla
+        if (item.name === state) {
+          uf = item.uf
           return
         }
       })
@@ -110,11 +108,11 @@ export default function State() {
   return (
     <div>
       <TitleFilter icon={<LocationOnOutlinedIcon />} title="Localização" />
-      <div className="flex flex-wrap w-72">
+      <div className="flex w-72 flex-wrap">
         {!activeFilter ? (
           <form
             onSubmit={(event) => addLocationFilter(event, state, city)}
-            className="flex flex-col gap-4 w-full"
+            className="flex w-full flex-col gap-4"
           >
             <select
               value={state}
@@ -122,8 +120,8 @@ export default function State() {
             >
               <option value="">Selecione Estado</option>
               {states.map((state) => (
-                <option value={state.nome} key={state.id}>
-                  {state.nome}
+                <option value={state.name} key={state.id}>
+                  {state.name}
                 </option>
               ))}
             </select>
@@ -134,8 +132,8 @@ export default function State() {
               >
                 <option value="">Selecionar cidade</option>
                 {cities.map((city) => (
-                  <option value={city.nome} key={city.id}>
-                    {city.nome}
+                  <option value={city.name} key={city.id}>
+                    {city.name}
                   </option>
                 ))}
               </select>
@@ -148,7 +146,7 @@ export default function State() {
                   setState('')
                   setCity('')
                 }}
-                className="underline text-xs"
+                className="text-xs underline"
               >
                 Limpar
               </button>
@@ -157,10 +155,10 @@ export default function State() {
         ) : (
           <>
             <div className="flex flex-col">
-              <p className="text-sm self-left mr-1 capitalize">
+              <p className="self-left mr-1 text-sm capitalize">
                 Estado: {state}
               </p>
-              <p className="text-sm self-left mr-1 capitalize">
+              <p className="self-left mr-1 text-sm capitalize">
                 Cidade: {city ? city : 'Todas'}
               </p>
             </div>

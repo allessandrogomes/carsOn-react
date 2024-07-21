@@ -28,7 +28,7 @@ export default function Input({
       <input
         value={typeInputPrice ? formatToBRL(Number(value) / 100) : value}
         onChange={onChange}
-        className="mb-2 inputAno border border-color1 rounded-full w-24 h-8 font-archivo text-[10px] p-3 outline-none mr-4"
+        className="inputAno mb-2 mr-4 h-8 w-24 rounded-full border border-color1 p-3 font-archivo text-[10px] outline-none"
         placeholder={placeholder}
         type="text"
         minLength={minLength}
@@ -37,7 +37,7 @@ export default function Input({
         inputMode="numeric"
         required={required}
       />
-      <h5 className="text-left text-[10px] text-color1 font-archivo">{h5}</h5>
+      <h5 className="text-left font-archivo text-[10px] text-color1">{h5}</h5>
     </div>
   )
 }

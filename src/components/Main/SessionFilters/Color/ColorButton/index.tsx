@@ -12,7 +12,7 @@ export default function ColorButton({
   return (
     <div
       onClick={onClick}
-      className={`${color} ${selected ? 'border-2' : ''} border-color2 h-6 w-14 cursor-pointer rounded flex justify-center items-center`}
+      className={`${color} ${selected ? 'border-2' : ''} flex h-6 w-14 cursor-pointer items-center justify-center rounded border-color2`}
     ></div>
   )
 }

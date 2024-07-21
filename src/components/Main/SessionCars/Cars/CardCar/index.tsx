@@ -20,10 +20,10 @@ export default function CardCar({
         className="mb-2 h-32 w-56 rounded-borde-radius-32px bg-cover bg-no-repeat"
         style={{ backgroundImage: `url(${image})` }}
       ></div>
-      <div className="flex text-left">
+      <div className="flex h-[250px] text-left">
         <div className="h-50 w-px bg-color3"></div>
-        <div>
-          <h3 className="nomeCarro mb-1 ml-4 font-archivo text-base font-bold uppercase text-color2">
+        <div className="flex w-full flex-col justify-around">
+          <h3 className="mb-1 ml-4 font-archivo text-base font-bold uppercase text-color2">
             {brand} {model} {year}
           </h3>
           <h4 className="mb-1 ml-4 font-big-shoulders-display text-lg font-bold">
@@ -36,7 +36,7 @@ export default function CardCar({
             <h4 className="font-archivo text-sm">{km}km</h4>
           </div>
           <h4 className="mb-4 ml-4 font-archivo text-sm capitalize">
-            city - <span className="estadoCarro uppercase">state</span>
+            city - <span className="uppercase">state</span>
           </h4>
           <span className="ml-2 cursor-pointer text-xs text-blue-500 underline">
             <PersonIcon />

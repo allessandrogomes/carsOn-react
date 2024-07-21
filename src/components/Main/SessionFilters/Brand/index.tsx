@@ -114,7 +114,7 @@ const Brand = () => {
   return (
     <div>
       <TitleFilter title="Marca" icon={<LocalOfferOutlinedIcon />} />
-      <div className="flex flex-wrap w-56 justify-between text-center">
+      <div className="flex w-56 flex-wrap justify-between text-center">
         {brands.map((item) => (
           <BrandButton
             onClick={() => resolveBrandFilter(item.brandName)}
