@@ -1,9 +1,10 @@
 import { Button, Typography } from '@mui/material'
 import ChatIcon from '@mui/icons-material/Chat'
 
-const ChatButton = () => {
+const ChatButton = ({ chatButtonType }: { chatButtonType: string }) => {
   return (
     <Button
+      data-testid={chatButtonType}
       variant="contained"
       sx={{
         backgroundColor: '#FFF',

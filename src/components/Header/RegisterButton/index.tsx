@@ -1,9 +1,14 @@
 import { Button, Typography } from '@mui/material'
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd'
 
-const RegisterButton = () => {
+const RegisterButton = ({
+  registerButtonType,
+}: {
+  registerButtonType: string
+}) => {
   return (
     <Button
+      data-testid={registerButtonType}
       onClick={() => (window.location.href = '/register')}
       variant="contained"
       sx={{

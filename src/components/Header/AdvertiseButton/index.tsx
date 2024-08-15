@@ -1,9 +1,14 @@
 import { Button, Typography } from '@mui/material'
 import CampaignIcon from '@mui/icons-material/Campaign'
 
-const AdvertiseButton = () => {
+const AdvertiseButton = ({
+  advertiseButtonType,
+}: {
+  advertiseButtonType: string
+}) => {
   return (
     <Button
+      data-testid={advertiseButtonType}
       variant="contained"
       sx={{
         backgroundColor: '#FFF',

@@ -40,12 +40,12 @@ function Header(props: IProps) {
       }}
       onClick={handleDrawerToggle}
     >
-      <Logo />
+      <Logo logoType="logoMobile" />
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-        <AdvertiseButton />
-        <ChatButton />
-        <LoginButton />
-        <RegisterButton />
+        <AdvertiseButton advertiseButtonType="advertiseButtonMobile" />
+        <ChatButton chatButtonType="chatButtonMobile" />
+        <LoginButton loginButtonType="loginButtonMobile" />
+        <RegisterButton registerButtonType="registerButtonMobile" />
       </Box>
     </Box>
   )
@@ -54,7 +54,7 @@ function Header(props: IProps) {
     typeof window !== 'undefined' ? window.document.body : undefined
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box data-testid="header" sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar
         sx={{
@@ -91,14 +91,14 @@ function Header(props: IProps) {
               justifySelf: { xs: 'center' },
             }}
           >
-            <Logo />
+            <Logo logoType="logoDesktop" />
           </Box>
           <SearchBar />
           <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: '1rem' }}>
-            <AdvertiseButton />
-            <ChatButton />
-            <LoginButton />
-            <RegisterButton />
+            <AdvertiseButton advertiseButtonType="advertiseButtonDesktop" />
+            <ChatButton chatButtonType="chatButtonDesktop" />
+            <LoginButton loginButtonType="loginButtonDesktop" />
+            <RegisterButton registerButtonType="registerButtonDesktop" />
           </Box>
         </Toolbar>
       </AppBar>

@@ -23,7 +23,7 @@ export default function CardCar({
       <div className="flex h-[250px] text-left">
         <div className="h-50 w-px bg-color3"></div>
         <div className="flex w-full flex-col justify-around">
-          <h3 className="mb-1 ml-4 font-archivo text-base font-bold uppercase text-color2">
+          <h3 className="mb-1 ml-4 h-[48px] font-archivo text-base font-bold uppercase text-color2">
             {brand} {model} {year}
           </h3>
           <h4 className="mb-1 ml-4 font-big-shoulders-display text-lg font-bold">

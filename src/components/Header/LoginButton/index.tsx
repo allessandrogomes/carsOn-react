@@ -3,7 +3,7 @@ import LoginIcon from '@mui/icons-material/Login'
 import LoginModal from '../../Main/LoginModal'
 import { useState } from 'react'
 
-const LoginButton = () => {
+const LoginButton = ({ loginButtonType }: { loginButtonType: string }) => {
   const [btnOpenClicked, setBtnOpenClicked] = useState<boolean>(false)
 
   function openModal() {
@@ -14,7 +14,7 @@ const LoginButton = () => {
   }
 
   return (
-    <Box>
+    <Box data-testid={loginButtonType}>
       <Button
         onClick={openModal}
         variant="contained"

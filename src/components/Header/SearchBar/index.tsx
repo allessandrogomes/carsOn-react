@@ -25,11 +25,21 @@ const SearchBar = () => {
           params: { search: searchValue },
         })
         .then((response) => {
-          setResults(response.data.advertisements)
-          setTotalResults(response.data.totalAdvertisements)
+          const { advertisements, totalAdvertisements } = response.data || {}
+
+          if (advertisements && totalAdvertisements !== undefined) {
+            setResults(response.data.advertisements)
+            setTotalResults(response.data.totalAdvertisements)
+          } else {
+            console.error('Estrutura de resposta inesperada:', response.data)
+            setResults([])
+            setTotalResults(0)
+          }
         })
         .catch((error) => {
           console.error('Erro ao buscar os dados:', error)
+          setResults([])
+          setTotalResults(0)
         })
     } else {
       setResults([])
@@ -44,7 +54,7 @@ const SearchBar = () => {
   }
 
   return (
-    <div className="relative">
+    <div aria-label="Search Bar" className="relative">
       <Box
         sx={{
           alignItems: 'center',
@@ -58,6 +68,7 @@ const SearchBar = () => {
         }}
       >
         <Input
+          inputProps={{ 'data-testid': 'searchInput' }}
           onKeyDown={(event) => {
             if (event.key === 'Enter') {
               navigate(`/?search=${searchValue}`)
@@ -79,6 +90,7 @@ const SearchBar = () => {
       </Box>
       {searchValue && (
         <ul
+          data-testid="suggestionList"
           className={`${!showList ? 'hidden' : ''} absolute left-5 w-[85%] bg-white text-teal-400`}
         >
           {results.map((ad) => (
