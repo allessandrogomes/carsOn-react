@@ -1,6 +1,8 @@
 import { Outlet } from 'react-router-dom'
 import Header from '../Header'
 import Footer from '../Footer'
+import WarningModal from '../WarningModal'
+import MaintenanceLabel from '../MaintenanceLabel'
 
 export default function DefaultPage() {
   return (
@@ -11,6 +13,8 @@ export default function DefaultPage() {
 
       <main>
         <Outlet />
+        <WarningModal />
+        <MaintenanceLabel />
       </main>
 
       <footer>
