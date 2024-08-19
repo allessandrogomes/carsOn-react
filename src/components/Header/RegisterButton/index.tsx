@@ -9,7 +9,8 @@ const RegisterButton = ({
   return (
     <Button
       data-testid={registerButtonType}
-      onClick={() => (window.location.href = '/register')}
+      //window.location.href = '/register'
+      onClick={() => alert('Esta página está em Desenvolvimento')}
       variant="contained"
       sx={{
         backgroundColor: '#FFF',
