@@ -5,7 +5,7 @@ export default {
     extend: {
       backgroundImage: {
         lupa: "url('/public/imagens/Cabecalho/lupa.svg')",
-        banner: "url('/public/imagens/Chamada/banner.svg')",
+        banner: "url('/imagens/Chamada/banner.svg')",
       },
       backgroundPosition: {
         'lupa-position': '95%',
