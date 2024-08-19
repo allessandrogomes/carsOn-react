@@ -3,6 +3,7 @@
   "private": true,
   "version": "3.0.0",
   "type": "module",
+  "lastUpdate": "19-08-2024",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
