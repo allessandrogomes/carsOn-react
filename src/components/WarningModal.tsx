@@ -29,7 +29,7 @@ export default function WarningModal() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Projeto em Desenvolvimento
+            Projeto em Desenvolvimento &#128679;
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Atualmente este projeto está em Desenvolvimento, portanto, algumas

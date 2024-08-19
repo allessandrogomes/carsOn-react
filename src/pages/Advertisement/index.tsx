@@ -1,9 +1,9 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import Loading from '../../components/Main/Loading'
 import { Box } from '@mui/material'
 import { IAdvertisement } from '../../interfaces/IAdvertisement'
+import apiService from '../../services/apiService'
 
 export default function Advertisement() {
   const [searchParams] = useSearchParams()
@@ -17,8 +17,8 @@ export default function Advertisement() {
   useEffect(() => {
     setLoading(true)
     if (searchParams.size) {
-      axios
-        .get(`https://localhost:3001/advertisement`, {
+      apiService
+        .get('/advertisement', {
           params: { id: searchParams.get('id') },
         })
         .then((response) => {

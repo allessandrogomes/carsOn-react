@@ -1,9 +1,9 @@
 import SearchIcon from '@mui/icons-material/Search'
 import { Box, Input } from '@mui/material'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { IAdvertisement } from '../../../interfaces/IAdvertisement'
+import apiService from '../../../services/apiService'
 
 const SearchBar = () => {
   const [searchValue, setSearchValue] = useState<string>('')
@@ -20,8 +20,8 @@ const SearchBar = () => {
   useEffect(() => {
     if (searchValue) {
       setShowList(true)
-      axios
-        .get(`https://localhost:3001/advertisements/search`, {
+      apiService
+        .get('/advertisements/search', {
           params: { search: searchValue },
         })
         .then((response) => {

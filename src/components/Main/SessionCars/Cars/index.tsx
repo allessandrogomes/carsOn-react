@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import CardCar from './CardCar'
-import axios from 'axios'
+import apiService from '../../../../services/apiService'
 import { Box, Pagination, Stack, Typography } from '@mui/material'
 import { useSearchParams } from 'react-router-dom'
 import Loading from '../../Loading'
@@ -20,8 +20,8 @@ export default function Cars() {
 
   useEffect(() => {
     setLoading(true)
-    axios
-      .get(`https://localhost:3001/advertisements/search`, {
+    apiService
+      .get('/advertisements/search', {
         params: {
           search: searchParams.get('search'),
           page: searchParams.get('page'),
